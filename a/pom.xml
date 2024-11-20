@@ -58,6 +58,11 @@
             <!--            wildfly plugin -->
             <!--
             ________________________________________________________
+            main commands:
+            mvn wildfly:deploy
+            mvn wildfly:redeploy
+            mvn wildfly:undeploy
+            ________________________________________________________
             Use the FQN (Fully Qualified Name) of the maven goal:
             mvn org.wildfly.plugins:wildfly-maven-plugin:deploy
 
@@ -73,7 +78,7 @@
             ________________________________________________________
             storage login information in ~/.m2/settings.xml:
 
-            setting in settings.xml:
+            settings.xml must have:
             <servers>
                 <server>
                     <id>wildfly-local</id>
@@ -109,7 +114,17 @@
                     <filename>${project.build.directory}/${project.build.finalName}.${package.extension}</filename>
                     -->
                 </configuration>
-
+<!--
+                deploy automatisation
+-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
 
             </plugin>
             <!--        wildfly plugin-->
