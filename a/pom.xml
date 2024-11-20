@@ -1,5 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -8,12 +9,27 @@
         <version>beta</version>
     </parent>
 
+    <properties>
+        <!--
+        usage with maven define system property:
+        mvn org.wildfly.plugins:wildfly-maven-plugin:deploy -Dpass=password
+        or
+        mvn wildfly:deploy -Dpass=password
+        -->
+        <wildfly.server.password>${pass}</wildfly.server.password>
+
+        <package.extension>jar</package.extension>
+
+    </properties>
+
 
     <artifactId>a</artifactId>
     <packaging>ejb</packaging>
 
 
     <dependencies>
+
+
         <dependency>
             <groupId>jakarta.ejb</groupId>
             <artifactId>jakarta.ejb-api</artifactId>
@@ -21,25 +37,85 @@
         </dependency>
 
 
-        <!--
-
-        <dependency>
-    <groupId>jakarta.annotation</groupId>
-    <artifactId>jakarta.annotation-api</artifactId>
-    <version>3.0.0</version>
-</dependency>
+        <!--        <dependency>
+                    <groupId>jakarta.annotation</groupId>
+                    <artifactId>jakarta.annotation-api</artifactId>
+                    <version>3.0.0</version>
+                </dependency>-->
 
 
-        -->
+        <!--        <dependency>
+                    <groupId>org.jsoup</groupId>
+                    <artifactId>jsoup</artifactId>
+                    <version>1.18.1</version>
+                </dependency>-->
+
+
     </dependencies>
 
-<build>
-    <plugins>
-      
+    <build>
+        <plugins>
+
+            <!--            wildfly plugin -->
+            <!--
+            ________________________________________________________
+            Use the FQN (Fully Qualified Name) of the maven goal:
+            mvn org.wildfly.plugins:wildfly-maven-plugin:deploy
+
+            or prefix 'wildfly':
+            mvn wildfly:deploy
+            with settings:
+            file: ~/.m2/settings.xml:
+            <settings>
+                <pluginGroups>
+                    <pluginGroup>org.wildfly.plugins</pluginGroup>
+                </pluginGroups>
+            </settings>
+            ________________________________________________________
+            storage login information in ~/.m2/settings.xml:
+
+            setting in settings.xml:
+            <servers>
+                <server>
+                    <id>wildfly-local</id>
+                    <username>admin</username>
+                    <password>password</password>
+                </server>
+            </servers>
+
+            usage in pom:
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.0.1.Final</version>
+                <configuration>
+                    <hostname>localhost</hostname>
+                    <port>9990</port>
+                    <serverId>wildfly-local</serverId>
+                </configuration>
+            </plugin>
+            ___________________________________________________________
+            -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.0.1.Final</version>
+                <configuration>
+                    <!-- Server settings -->
+                    <hostname>localhost</hostname>
+                    <port>9990</port>
+                    <username>user</username>
+                    <password>${wildfly.server.password}</password>
+                    <!--
+                    <filename>${project.build.directory}/${project.build.finalName}.${package.extension}</filename>
+                    -->
+                </configuration>
 
 
+            </plugin>
+            <!--        wildfly plugin-->
 
-    </plugins>
-</build>
+        </plugins>
+    </build>
 
 </project>
