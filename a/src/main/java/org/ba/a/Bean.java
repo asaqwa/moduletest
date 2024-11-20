@@ -8,7 +8,7 @@ import jakarta.ejb.Singleton;
 @Singleton
 public class Bean {
     private static int count = 0;
-    private static long start = System.currentTimeMillis();
+    private static final long start = System.currentTimeMillis();
 
     @Schedule(hour = "*", minute = "*", second = "*/6", persistent = false)
     private void task() {
