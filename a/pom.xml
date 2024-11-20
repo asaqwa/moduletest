@@ -36,11 +36,11 @@
             <scope>provided</scope>
         </dependency>
 
-<!--        <dependency>
+        <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.18.1</version>
-        </dependency>-->
+        </dependency>
 
 
         <!--        <dependency>
@@ -114,20 +114,34 @@
                     <filename>${project.build.directory}/${project.build.finalName}.${package.extension}</filename>
                     -->
                 </configuration>
-<!--
-                deploy automatisation
--->
+
                 <executions>
+
                     <execution>
+                        <id>main_app_deploy</id>
                         <phase>package</phase>
                         <goals>
                             <goal>deploy</goal>
                         </goals>
                     </execution>
+
+                    <execution>
+                        <id>jsoup_deploy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>deploy-artifact</goal>
+                        </goals>
+                        <configuration>
+                            <groupId>org.jsoup</groupId>
+                            <artifactId>jsoup</artifactId>
+<!--                            <name>postgresql.jar</name>-->
+                        </configuration>
+                    </execution>
+
                 </executions>
 
             </plugin>
-            <!--        wildfly plugin-->
+            <!--        wildfly plugin  -->
 
         </plugins>
     </build>
