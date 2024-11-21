@@ -4,6 +4,10 @@ package org.ba.a;
 import jakarta.ejb.Schedule;
 import jakarta.ejb.Singleton;
 
+import java.util.List;
+
+import static org.ba.b.DBProvider.getPrinters;
+
 
 @Singleton
 public class Bean {
@@ -15,7 +19,8 @@ public class Bean {
         long s = (System.currentTimeMillis()-start)/1000;
 
         String html = JsoupProvider.getString();
-        System.out.printf("%d:%02d, iteration %d, %s\n", s/60, s%60, ++count, html);
+        List<String> printers = getPrinters();
+        System.out.printf("%d:%02d, iteration %d, %s\n%s\n", s/60, s%60, ++count, html, printers.toString());
     }
 
     public static void main(String[] args) {

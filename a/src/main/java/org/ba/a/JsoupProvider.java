@@ -13,7 +13,7 @@ public class JsoupProvider {
 
         try {
             Document doc = Jsoup.connect("http://google.com").get();
-            return doc.location();
+            return doc.title();
         } catch (IOException e) {
             java.util.logging.Logger.getLogger(JsoupProvider.class.getSimpleName()).log(Level.SEVERE, e.toString());
             return null;
