@@ -15,6 +15,26 @@
 
     <modules>
         <module>a</module>
+        <module>a-assembly</module>
     </modules>
+
+
+    <build>
+        <plugins>
+            <!-- The WildFly plugin deploys your ear to a local JBoss AS container -->
+            <!-- Due to Maven's lack of intelligence with EARs we need
+                 to configure the wildfly maven plugin to skip deployment for all modules.
+                 We then enable it specifically in the ear module. -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.0.1.Final</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

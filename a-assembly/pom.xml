@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.ba</groupId>
+        <artifactId>modul.test</artifactId>
+        <version>beta</version>
+    </parent>
+
+    <artifactId>a-assembly</artifactId>
+    <packaging>ear</packaging>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.ba</groupId>
+            <artifactId>a</artifactId>
+            <version>beta</version>
+            <type>ejb</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--EAR plugin: format of output file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <!-- Tell Maven we are using Jakarta EE -->
+                    <version>10</version>
+                    <!-- Use Jakarta EE ear libraries as needed. Jakarta EE ear libraries
+                        are in easy way to package any libraries needed in the ear, and automatically
+                        have any modules (EJB-JARs and WARs) use them -->
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <modules>
+                        <!-- Default context root of the web app is /a-assembly-web.
+                            If a custom context root is needed, uncomment the following snippet to
+                            register our War as a web module and set the contextRoot property -->
+                        <!--
+                        <webModule>
+                            <groupId>${project.groupId}</groupId>
+                            <artifactId>a-assembly-web</artifactId>
+                            <contextRoot>/a-assembly</contextRoot>
+                        </webModule>
+                        -->
+                    </modules>
+                    <outputFileNameMapping>@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                </configuration>
+            </plugin>
+
+            <!-- The WildFly plug-in deploys your ear to a local WildFly / JBoss EAP container.
+                Due to Maven's lack of intelligence with EARs we need to configure
+                the WildFly Maven plug-in to skip deployment for all modules. We then enable
+                it specifically in the ear module. -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.0.1.Final</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+
+
+</project>
